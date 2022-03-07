@@ -9,6 +9,7 @@ s=input("Please enter a sentence:")
 s=s.split()
 num=len(s)
 res=find_longest_word(s)
+
 if num == 1:
     print(f"The sentence has 1 word and the longest word is {res}.")
 else:
