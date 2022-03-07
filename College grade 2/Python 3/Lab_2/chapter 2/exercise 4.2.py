@@ -10,6 +10,9 @@ try:
     a[len(a)-1]=(a[len(a)-1].strip( '.' ))
     num=len(a)
     res=find_longest_word(a)
-    print("The sentence has "+str(num)+" sentences and the longest word is "+str(res)+".")
+    if num != 1:
+        print("The sentence has " + str(num) + " words and the longest word is " + str(res) + ".")
+    else:
+        print("The sentence has " + str(num) + " word and the longest word is " + str(res) + ".")
 except:
     print("no correct")
