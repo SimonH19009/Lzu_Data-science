@@ -3,7 +3,12 @@ try:
     a=a.split()
     num=len(a)
     res = max(a, key=len, default='')
-    print("The sentence has "+str(num)+" sentences and the longest word is "+str(res)+".")
+    if num!=1:
+        print("The sentence has "+str(num)+" words and the longest word is "+str(res)+".")
+    else:
+        print("The sentence has " + str(num) + " word and the longest word is " + str(res) + ".")
 except:
     print("no correct")
+
+
 
