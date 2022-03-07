@@ -7,6 +7,7 @@ def find_longest_word(word_list):
 try:
     a=input("Please enter a sentence:")
     a=a.split()
+    a[len(a)-1]=(a[len(a)-1].strip( '.' ))
     num=len(a)
     res=find_longest_word(a)
     print("The sentence has "+str(num)+" sentences and the longest word is "+str(res)+".")
