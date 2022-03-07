@@ -2,7 +2,7 @@ num = input ("Please enter a number:")
 try:
     num = int(num)
 except ValueError:
-        print("Please enter a two-digit positive integer number.")
+        print("Please enter a number.")
 else:
     if 10 <= num <= 99:
         x = (num / 10)

@@ -13,4 +13,3 @@ else:
         print(f"{s0} seconds correspond to {d} day, {h} hours, {m} minutes and {s} seconds")
     else:
         print("Please enter a positive integer number.")
-
