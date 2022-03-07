@@ -1,6 +1,6 @@
 try:
     a=int(input("Please enter a number:"))
-    if a<100:
+    if 0<a<100:
         a = str(a)
         print(a[0])
         print(a[1])
