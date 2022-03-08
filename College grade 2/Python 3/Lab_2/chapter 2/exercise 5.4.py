@@ -15,6 +15,8 @@ def main():
                     color = "white"
                 else:
                     color = "lightyellow"
+                if not line:
+                    break
                 print_line(line, color, maxwidth, format)
                 count += 1
             except EOFError:
