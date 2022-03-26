@@ -18,15 +18,15 @@ try:
             print ("")
         else:
             break
-except:
+except ValueError:
     print ("Please enter a number!")
 else:
-adic = dict(zip(numberlist,gradelist))
-for key,value in adic.items():
-    print (f"\nStudent {value[0]}  number: {key}")
-    print (f"Student {key}  grade 1: {value[1]}")
-    print (f"Student {key} grade 2: {value[2]}")
-print ("\n{0:<7} {1:^7} {2:^7} {3:^6}".format("Number","Grade1","Grade2","Avg"))
-for key,value in adic.items():
-    avg = (value[1] + value[2]) / 2
-    print ("{0:<7} {1:^7} {2:^7} {3:^6}".format(key,value[1],value[2],avg))
+    adic = dict(zip(numberlist,gradelist))
+    for key,value in adic.items():
+        print (f"\nStudent {value[0]}  number: {key}")
+        print (f"Student {key}  grade 1: {value[1]}")
+        print (f"Student {key} grade 2: {value[2]}")
+    print ("\n{0:<7} {1:^7} {2:^7} {3:^6}".format("Number","Grade1","Grade2","Avg"))
+    for key,value in adic.items():
+        avg = (value[1] + value[2]) / 2
+        print ("{0:<7} {1:^7} {2:^7} {3:^6}".format(key,value[1],value[2],avg))
