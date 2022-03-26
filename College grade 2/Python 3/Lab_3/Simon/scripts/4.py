@@ -20,7 +20,7 @@ try:
             break
 except:
     print ("Please enter a number!")
-
+else:
 adic = dict(zip(numberlist,gradelist))
 for key,value in adic.items():
     print (f"\nStudent {value[0]}  number: {key}")
