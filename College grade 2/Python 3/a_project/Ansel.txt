@@ -1,0 +1,227 @@
+import time
+
+profit=0
+result=True
+#Storing information on raw materials in stock
+Water_stor=2000
+Milk_stor=400
+Coffee_stor=300
+Mocha_stor=0
+
+#Judging coffee making conditions
+cap_stor=Water_stor>=50 and Milk_stor>=50 and Coffee_stor>=50
+lat_stor=Water_stor>=80 and Milk_stor>=20 and Coffee_stor>=50
+moc_stor=Water_stor>=50 and Milk_stor>=50 and Coffee_stor>=40 & Mocha_stor>=10
+ame_stor=Water_stor>=100 and Coffee_stor>=50
+esp_stor=Water_stor>=70 and Coffee_stor>=80
+
+#count
+c_co=0
+l_co=0
+m_co=0
+a_co=0
+e_co=0
+
+#Create a coffee list
+Cap_list=[1,"Cappuccino","[Water: 50ml,Milk: 50ml, Coffee: 50ml]",12,cap_stor,c_co]
+Lat_list=[2,"Latte","[Water: 80ml; Milk: 20ml; Coffee: 50ml]",10,lat_stor,l_co]
+Moc_list=[3,"Mocha","[Water: 50ml; Milk: 50ml; Coffee: 40ml; Mocha: 10ml]",15,moc_stor,m_co]
+Ame_list=[4,"Cafe Americano","[Water: 100ml; Milk: 0ml; Coffee: 50ml]",10,ame_stor,a_co]
+Esp_list=[5,"Espresso","[Water: 70ml; Milk: 0ml; Coffee: 80ml]",14,esp_stor,e_co]
+Coffee_list=[Cap_list,Lat_list,Moc_list,Ame_list,Esp_list]
+
+#coupon list
+co_80=["12312","21333","24143","21321"]
+co_60=["21334","11333","22311","22321"]
+
+#Available items waiting for selection
+def menu():
+    print("#"*69+"\n"+"#"*13+" A nice day starts with a cup of coffee! "+"#"*15+"\n"+"#"*69)
+    for i in Coffee_list:
+        print(str(i[0])+"."+i[1]+" "+i[2]+":"+str(i[3])+"£¤")
+    print("  Quit [Q/q] ")
+    print("#"*69)
+
+#Select product process
+def select():
+    global result
+    Item=input("$ please select your item:")
+    if Item=="q" or Item=="Q":
+        print("The process is coming to an end")
+        result=False
+        return 0
+    elif Item=="clo":
+        result="break"
+        return 0
+    else:
+        try:
+            global item
+            item=float(Item)
+            if item.is_integer() and item<6 and item>0:
+                global chosed
+                item = int(item)
+                chosed=Coffee_list[item-1]
+                if chosed[-2]:
+                    con=input("\nyour item is available, please enter ¡®c¡¯ to continue:")
+                    if con!="c":
+                        print("\nYour order has been cancelled and will soon be returned to the main page")
+                        result=False
+                        return 0
+                else:
+                    print("\nSorry, the item you have selected is currently out of stock")
+                    result = False
+                    return 0
+            else:print("\nPlease enter the correct item number")
+        except:
+            print("\nPlease enter the correct item number")
+
+#Ask for a coupon
+def coupon():
+    while True:
+        ans = input("\na coupon is available? [y/n]:")
+        if ans =="y" :
+            c_num=input("\nplease enter your coupon No.:")
+            global price
+            if c_num in co_60:
+                price=chosed[3]*0.6
+                print("\nyou have a coupon with 60% discount, your item price is:"+str(chosed[3])+"*0.6="+str(chosed[3]*0.6))
+                break
+            elif c_num in co_80:
+                price = chosed[3]*0.8
+                print("you have a coupon with 80% discount, your item price is:" + str(chosed[3]) + "*0.8=" + str(chosed[3] * 0.8))
+                break
+            else:
+                price = chosed[3]
+                print("\nThe coupon you are using does not exist or has been used.")
+        elif ans=="n":
+            price=chosed[3]
+            break
+        else:
+            print("Please enter y or n.")
+
+#pay
+def pay_process():
+    global result
+    while True:
+        try:
+            twenty_n=int(input("\nplease enter your cash, how many 20£¤count? :"))
+            ten_n=int(input("how many 10£¤count? :"))
+            five_n=int(input("how many 5£¤count? :"))
+            one_n=int(input("how many 1£¤count? :"))
+        except:
+            print("Please enter the correct number.")
+        else:
+            break
+    pay_money=twenty_n*20+ten_n*10+five_n*5+one_n
+    print("your total amount is:"+str(pay_money))
+    while True:
+        if pay_money>=price:
+            print("\nyour change is: "+str(pay_money-price)+", please receipt it.")
+            break
+        elif pay_money< price:
+            action=input("\nyou have not enough money amount for buying, please continue to enter your cash [c] or quit with [q]: ")
+            if action=="q":
+                result = False
+                return 0
+            elif action=="c":
+                twenty_n_a = int(input("how many 20£¤count? :"))
+                ten_n_a = int(input("how many 10£¤count? :"))
+                five_n_a = int(input("how many 5£¤count? :"))
+                one_n_a = int(input("how many 1£¤count? :"))
+                pay_money=pay_money+twenty_n_a*20+ten_n_a*10+five_n_a*5+one_n_a
+                print("your total amount is:" + str(pay_money))
+
+#diifferent types stor_change
+def cap_change():
+    global Water_stor,Milk_stor,Coffee_stor,c_co
+    Water_stor=Water_stor-50
+    Milk_stor=Milk_stor-50
+    Coffee_stor=Coffee_stor-50
+    c_co=c_co+1
+
+def lat_change():
+    global Water_stor, Milk_stor, Coffee_stor, l_co
+    Water_stor=Water_stor-80
+    Milk_stor=Milk_stor-20
+    Coffee_stor=Coffee_stor-50
+    l_co=l_co+1
+
+def moc_change():
+    global Water_stor, Milk_stor, Coffee_stor, m_co ,Mocha_stor
+    Water_stor=Water_stor-50
+    Milk_stor=Milk_stor-50
+    Coffee_stor=Coffee_stor-40
+    Mocha_stor=Mocha_stor-10
+    m_co=m_co+1
+
+def ame_change():
+    global Water_stor, Coffee_stor, a_co
+    Water_stor=Water_stor-100
+    Coffee_stor=Coffee_stor-50
+    a_co=a_co+1
+
+def esp_change():
+    global Water_stor, Coffee_stor, e_co
+    Water_stor=Water_stor-70
+    Coffee_stor=Coffee_stor-80
+    e_co=e_co+1
+
+#back_office
+def stor_change():
+    global profit
+    if item==1:cap_change()
+    if item==2:lat_change()
+    if item==3:moc_change()
+    if item==4:ame_change()
+    if item==5:esp_change()
+    profit=profit+price
+
+#making coffee
+def wait():
+    text="¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­"
+    for t in text:
+        print(t, end='')
+        time.sleep(0.1)
+
+def make():
+    print("\nyour coffee is making:")
+    wait()
+    print("\n## coffee preparing finished!")
+    wait()
+    print("\n## coffee making finished!")
+    wait()
+    print("\n## coffee packaging finished!")
+    print("\nPlease take you coffee carefully!")
+
+def overall():
+    print("\nThe items sold on this machine are:")
+    print("# Cappuccino: "+str(c_co))
+    print("# Latte: "+str(l_co))
+    print("# Mocha: "+str(m_co))
+    print("# Cafe Americano: "+str(a_co))
+    print("# Espresso: "+str(e_co))
+    print("### Total profit: "+str(profit))
+
+def main():
+    while True:
+        menu()
+        select()
+        if not result:
+            time.sleep(1.5)
+            print("\n\n\n")
+            continue
+        if result=="clo":
+            break
+        coupon()
+        pay_process()
+        if not result:
+            time.sleep(1.5)
+            print("\n\n\n")
+            continue
+        stor_change()
+        make()
+        overall()
+        time.sleep(1.5)
+        print("\n\n\n")
+
+main()
